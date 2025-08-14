@@ -3,7 +3,7 @@
 cd "$HOME/archive"
 
 # Get the list of repositories to archive
-mapfile -t repositories < "$HOME/.archive-repositories-list.txt"
+mapfile -t repositories < "$HOME/.archive-repositories-list"
 
 # Loop through each repository and either mirror clone it or update the remotes
 for repository in ${repositories[*]}; do
