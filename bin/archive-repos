@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+cd "$HOME/archive"
+
+# Get the list of repositories to archive
+mapfile -t repositories < "$HOME/archive/repositories.txt"
+
+# Loop through each repository and either mirror clone it or update the remotes
+for repository in ${repositories[*]}; do
+    echo "Archiving $repository..."
+
+    if [ -d "$HOME/archive/$repository.git" ]; then
+        echo "   -> Updating..."
+        cd "$HOME/archive/$repository.git"
+        git remote update
+        cd "$HOME/archive"
+        echo "   -> Done."
+    else
+        echo "   -> Cloning..."
+        git clone --mirror "git@github.com:katharinegillis/$repository.git" "$repository.git"
+        echo "   -> Done."
+    fi
+done
